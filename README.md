@@ -1,61 +1,52 @@
 # Windows Utilities
 
-A curated collection of Windows automation scripts, batch utilities, registry tweaks, and configuration files designed to streamline post-installation setup, system cleanup, and everyday desktop workflows.
+Collection of scripts, batch tools, registry tweaks, and backups for setting up and maintaining Windows.
 
----
-
-## 📑 Repository Structure
+## Repository Structure
 
 ```text
 Windows Utilities/
 ├── Scripts/
 │   ├── Batch/
 │   │   ├── SoftwareInstaller.bat    # Interactive winget software installer
-│   │   ├── sys_cleanup.bat          # System, temp, and cache cleaner
-│   │   ├── organizer.bat            # Zen File Sorter for Downloads
-│   │   └── res.bat                  # Rapid display resolution switcher
+│   │   ├── sys_cleanup.bat          # Cleans temp files, caches, and update files
+│   │   ├── organizer.bat            # Sorts Downloads folder into subfolders
+│   │   └── res.bat                  # Display resolution switcher
 │   └── AutoHotKey/
-│       ├── keyboard.ahk             # Custom keyboard remaps & productivity hotkeys
-│       └── cords.ahk                # Screen coordinate capture tool
+│       ├── keyboard.ahk             # Hotkeys and keyboard remaps
+│       └── cords.ahk                # Mouse coordinates helper
 ├── Adobe/
-│   ├── block_adobe_firewall.bat     # Block Adobe outbound traffic via firewall
-│   ├── unblock_adobe_firewall.bat   # Remove Adobe firewall rules
-│   ├── block_adobe_hosts.bat        # Add Adobe telemetry blocks to hosts file
-│   ├── unblock_adobe_hosts.bat      # Restore original hosts file
-│   └── kill_adobe.bat               # Terminate all background Adobe services/tasks
+│   ├── block_adobe_firewall.bat     # Firewall rules to block Adobe outbound traffic
+│   ├── unblock_adobe_firewall.bat   # Removes the firewall rules
+│   ├── block_adobe_hosts.bat        # Blocks Adobe telemetry in hosts file
+│   ├── unblock_adobe_hosts.bat      # Restores hosts file
+│   └── kill_adobe.bat               # Kills Adobe background processes
 ├── Regs/
-│   ├── dis-update.reg               # Windows Update policy tweaks
-│   ├── verbose.reg                  # Enable verbose logon/logoff status messages
-│   └── verbose-def.reg              # Restore default logon message verbosity
-└── Setting Backups/                 # Application profile and tweak configurations
+│   ├── dis-update.reg               # Windows update tweaks
+│   ├── verbose.reg                  # Verbose startup and shutdown messages
+│   └── verbose-def.reg              # Restores default verbose settings
+└── Setting Backups/                 # App configurations and tweaks
 ```
 
----
+## Software Installer
 
-## 🚀 Highlight: Suggested Software Installer
+`Scripts/Batch/SoftwareInstaller.bat`
 
-Located at: [`Scripts/Batch/SoftwareInstaller.bat`](Scripts/Batch/SoftwareInstaller.bat)
+A simple command-line software installer using `winget`.
 
-A zero-dependency, interactive command-line application installer powered by **Windows Package Manager (`winget`)**.
+### Controls
 
-### ✨ Features
-- **Interactive TUI**: Toggleable checkboxes (`[ ]` / `[x]`) with real-time arrow navigation and zero screen flicker.
-- **Pre-Configured Sections**: Separated into **"I RECOMMEND"** and **"MIGHT BE USEFUL FOR YOU"** categories.
-- **Automatic Gray Badges**: Grayed-out hints are attached automatically based on the section—no manual tagging required.
-- **Double-Click Ready**: Packaged as a hybrid `.bat` launcher that automatically runs through PowerShell with execution policy bypassed.
-- **Smart Summary**: Confirms chosen packages before downloading and displays a clean status report upon completion.
-
-### 🎮 Controls
 | Key | Action |
-| :--- | :--- |
-| `↑` / `↓` or `W` / `S` | Move cursor up / down |
-| `[Space]` | Toggle checkbox (`[ ]` $\leftrightarrow$ `[x]`) |
-| `[A]` | Select All / Deselect All |
-| `[Enter]` | Confirm selections and begin installation |
-| `[Q]` / `[Esc]` | Cancel and exit |
+| --- | --- |
+| Up / Down (or W / S) | Move cursor |
+| Space | Toggle checkbox (`[ ]` / `[x]`) |
+| A | Toggle all |
+| Enter | Start installation |
+| Q / Esc | Exit |
 
-### 🛠️ Adding or Customizing Software
-Open [`SoftwareInstaller.bat`](Scripts/Batch/SoftwareInstaller.bat) in any text editor. Under `$Section1_Apps` or `$Section2_Apps`, add or modify entries:
+### Adding Programs
+
+Edit `SoftwareInstaller.bat` and add entries under `$Section1_Apps` or `$Section2_Apps`:
 
 ```powershell
 $Section1_Apps = @(
@@ -75,37 +66,33 @@ $Section2_Apps = @(
 )
 ```
 
-> **Tip**: You can look up any application's winget ID directly from the command prompt:
-> ```cmd
-> winget search "<application name>"
-> ```
+To find winget package IDs:
+```cmd
+winget search "<name>"
+```
 
----
+## Other Tools
 
-## 🧰 Other Utilities Overview
+### Scripts/Batch
+- `sys_cleanup.bat`: Deletes temp files, prefetch, thumbnail and icon cache, browser caches, and Windows Update downloads.
+- `organizer.bat`: Sorts files in the Downloads folder into Documents, Pictures, Videos, Audio, Archives, Scripts, Apps, ISO, and Others.
+- `res.bat`: Quick resolution switcher via nircmd (1080p, 4:3, custom).
 
-### 🧹 System Maintenance
-- **[`sys_cleanup.bat`](Scripts/Batch/sys_cleanup.bat)**: Clears Windows `%TEMP%`, system prefetch, thumbnail and icon caches, browser caches (Chrome & Edge), Windows Update download cache, and empties orphaned directories under the user profile.
-- **[`organizer.bat`](Scripts/Batch/organizer.bat)**: Automatically cleans up and organizes the `%USERPROFILE%\Downloads` folder by sorting documents, images, video, audio, installers, and archives into organized subfolders.
-- **[`res.bat`](Scripts/Batch/res.bat)**: Switches monitor resolutions via `nircmd` (1080p, 4:3 stretched, or custom aspect ratios).
+### Adobe
+- Scripts to block or unblock Adobe background network access via Windows Firewall and the `hosts` file.
+- `kill_adobe.bat`: Stops running Adobe background services.
+- Needs to be run as Administrator.
 
-### 🎨 Adobe Tools (`Adobe/`)
-- Contains automated scripts to block/unblock Adobe background telemetry and license check services through both Windows Firewall rules and the `hosts` file.
-- `kill_adobe.bat` terminates rogue Adobe background processes and services (CCXProcess, CoreSync, AGMService, etc.) to free system resources.
-- *Note: Run Adobe scripts with Administrator privileges.*
+### Regs
+- `verbose.reg`: Enables verbose status messages on logon and shutdown.
+- `verbose-def.reg`: Restores default logon/shutdown message display.
+- `dis-update.reg`: Windows Update tweaks.
 
-### ⚙️ Windows Registry Tweaks (`Regs/`)
-- **`verbose.reg`**: Enables verbose system messages during Windows startup, shutdown, and logon (shows detailed driver and service loading status).
-- **`verbose-def.reg`**: Restores Windows default startup/shutdown message behavior.
-- **`dis-update.reg`**: Applies registry policies for Windows Update behavior.
+### Scripts/AutoHotKey
+- `keyboard.ahk`: Custom hotkeys.
+- `cords.ahk`: Shows current cursor coordinates.
 
-### ⌨️ AutoHotKey (`Scripts/AutoHotKey/`)
-- **`keyboard.ahk`**: Custom keybindings and window manipulation shortcuts.
-- **`cords.ahk`**: Tooltip overlay showing current mouse pointer coordinates for script development.
-
----
-
-## 📋 Requirements
-- **Operating System**: Windows 10 (version 1809 or later) or Windows 11.
-- **Package Manager**: [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/) (preinstalled on modern Windows 10 & 11 via the App Installer package).
-- **Permissions**: Administrative rights are recommended for system cleanup, registry tweaks, and Adobe firewall management.
+## Requirements
+- Windows 10 (1809+) or Windows 11
+- winget (Windows Package Manager)
+- Administrator rights for cleanup, Adobe, and registry scripts

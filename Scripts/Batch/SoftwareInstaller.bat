@@ -360,13 +360,13 @@ foreach ($app in $selectedApps) {
     $code = $proc.ExitCode
 
     if ($code -eq 0) {
-        Write-Host "[✓] Installed $($app.Name)" -ForegroundColor Green
+        Write-Host "[+] Installed $($app.Name)" -ForegroundColor Green
         $installedList.Add($app.Name)
     } elseif ($code -eq -1978236885 -or $code -eq 2316632107) {
         Write-Host "[i] $($app.Name) is already installed or up to date" -ForegroundColor Cyan
         $installedList.Add("$($app.Name) (Already Installed / Up to date)")
     } else {
-        Write-Host "[✗] Failed to install $($app.Name) (Exit Code: $code)" -ForegroundColor Red
+        Write-Host "[-] Failed to install $($app.Name) (Exit Code: $code)" -ForegroundColor Red
         $failedList.Add("$($app.Name) (Exit Code: $code)")
     }
 }
@@ -378,14 +378,14 @@ Write-Host " Installation Summary" -ForegroundColor Cyan
 if ($installedList.Count -gt 0) {
     Write-Host "`nCompleted ($($installedList.Count)): " -ForegroundColor Green
     foreach ($item in $installedList) {
-        Write-Host "  [✓] $item" -ForegroundColor Green
+        Write-Host "  [+] $item" -ForegroundColor Green
     }
 }
 
 if ($failedList.Count -gt 0) {
     Write-Host "`nFailed or Requires Attention ($($failedList.Count)): " -ForegroundColor Red
     foreach ($item in $failedList) {
-        Write-Host "  [✗] $item" -ForegroundColor Red
+        Write-Host "  [-] $item" -ForegroundColor Red
     }
 }
 
