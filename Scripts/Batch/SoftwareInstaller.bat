@@ -33,6 +33,7 @@ $Section2_Tag   = "Might be useful for you"
 $Section2_Apps = @(
     @{ Name = "Bulk Rename Utility";     Id = "TGRMNSoftware.BulkRenameUtility";    Checked = $false }
     @{ Name = "Discord";                 Id = "Discord.Discord";                    Checked = $false }
+    @{ Name = "NVCleanstall";            Id = "TechPowerUp.NVCleanstall";           Checked = $false }
     @{ Name = "Nora";                    Id = "Sandakan.Nora";                      Checked = $false }
     @{ Name = "Spotify";                 Id = "Spotify.Spotify";                    Checked = $false }
     @{ Name = "SquirrelDisk";            Id = "squirreldisk.SquirrelDisk";          Checked = $false }
